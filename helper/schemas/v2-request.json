@@ -1,0 +1,72 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "type":"object",
+    "properties":{
+        "session":{
+            "type": "string"
+        },
+        "responseId":{
+            "type": "string"
+        },
+        "queryResult":{
+            "type": "object",
+            "properties": {
+                "queryText":{
+                    "type": "string"
+                },
+                "languageCode":{
+                    "type": "string"
+                },
+                "speechReconitionConfidence":{
+                    "type": "string"
+                },
+                "action":{
+                    "type": "string"
+                },
+                "parmaters":{
+                    "type": "object"
+                },
+                "allRequiredParamsPresent":{
+                    "type": "boolean"
+                },
+                "fulfillmentText":{
+                    "type": "string"
+                },
+                "fulfillmentMessages": {
+                    "type": "array"
+                },
+                "outputContexts":{
+                    "type": "array"
+                },
+                "intent":{
+                    "type": "object"
+                },
+                "intentDetectionConfidence":{
+                    "type": "number"
+                },
+                "sentimentAnalysisResult":{
+                    "type": "object"
+                },
+                "knowledgeAnswers":{
+                   "type": "object" 
+                }
+            },
+            "required": [
+                "queryText",
+                "fulfillmentMessages",
+                "outputContexts"
+            ]
+        },
+        "alternativeQueryResult":{
+            "type": "array"
+        },
+        "originalDetectIntentRequest":{
+            "type": "object"
+        }
+    },
+    "required":[
+      "session",
+      "responseId",
+      "queryResult"
+    ]
+}
