@@ -25,7 +25,7 @@ const loadConfig = () => {
     return {
         "port": process.env.PORT || 3000,
         "fullfillmentConfig": {
-            "enable": true,
+            "enable": false,
             "platformsEnabled": ["TEXT", "TELEPHONY"]
         },
         "fullfillmentConfigV3": {
