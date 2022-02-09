@@ -15,22 +15,23 @@
  */
 
  "use strict";
-
+ 
+ const { GetData } = require("../../../helper/firestore-methods");
  /**
   * Default tag controller
   * @param {object} df webhook fulfillment object
   */
 
- const { GetData } = require("./../../../helper/firestore-methods");
  
- const FetchPhoneNumber = async (df, db) =>{
+ const FetchProfileDetails = async (df, db) =>{
      
-    // let userData = await GetData(db);
-    // console.log(userData);
+   let userData = await GetData(db);
+   console.log(userData);
+   
+   df.setParameter('dbUserDetails', userData);
 
-    df.setResponseText(`Alright, Are you looking to update your contact number 9876543210?`);
     
  };
  
- module.exports = FetchPhoneNumber;
+ module.exports = FetchProfileDetails;
  

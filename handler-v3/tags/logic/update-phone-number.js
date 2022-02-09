@@ -26,7 +26,19 @@ const { logger } = require("express-winston");
 
  const UpdatePhoneNumber = async (df, db) =>{
 
-   df.setResponseText(`We have successfully updated your contact details.`);
+  let params ;
+    if (df._request && df._request.sessionInfo && df._request.sessionInfo.parameters) {
+        params = df._request.sessionInfo.parameters;
+    };
+
+  let updatedPhoneNumber = params["phonenumber"]["phone-number"]
+  
+  let updateDataResponse = await UpdateData(db, {"phoneNumber": updatedPhoneNumber})
+
+  if(updateDataResponse){
+    df.setResponseText(`We have successfully updated your contact details.`);
+    
+  }
     
  };
  

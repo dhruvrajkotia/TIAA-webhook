@@ -46,7 +46,7 @@ const loadConfig = () => {
             },
             "databases": [
                 {
-                    "enable": false,
+                    "enable": true,
                     "type": "firestore",
                     "connector": require("../lib/database/firestore-connector")
                 }

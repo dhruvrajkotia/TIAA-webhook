@@ -1,25 +1,34 @@
 "use strict";
 
 //fetch data from firestore db
-const GetData = (db, docId = '') => {
-    db.firestore.collection("userDetails").doc(docId).get().then((res) => {
-        console.log(res.data());
-        return res.data();
-    }).catch((err) => {
-        console.log(err);
-        return;
-    });
+const GetData = async(db) => {
+    
+    try {
+        const document = db.database.firestore.doc("userDetails/iqdGfnYUWs8ptKxh5pk3");
+        const userData = await document.get();
+        return userData.data();
+    
+    } catch (error) {
+        console.log(error);
+        return
+    }
+    
 }
 
 //update data in the firestore db
-const UpdateData = (db, updatedDetails, docId = '') => {
-    db.firestore.collection("userDetails").doc(docId).update(updatedDetails).then(() => {
-        console.log("Document updated");
+const UpdateData = async(db, updatedDetails) => {
+    
+    try {
+        const document = db.database.firestore.doc("userDetails/iqdGfnYUWs8ptKxh5pk3");
+        const updatedData = document.update(updatedDetails);
+        console.log("Details updated");
         return true
-    }).catch((err) => {
+    } catch (error) {
         console.log(err);
         return false
-    })
+    }
+    
 }
 
-exports.module = { GetData, UpdateData };
+
+module.exports = { GetData, UpdateData };
