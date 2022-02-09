@@ -37,7 +37,8 @@ const { logger } = require("express-winston");
 
   if(updateDataResponse){
     df.setResponseText(`We have successfully updated your contact details.`);
-    
+    let userData = await GetData(db);
+    df.setParameter('db-user-details', userData);
   }
     
  };

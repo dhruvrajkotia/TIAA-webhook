@@ -20,6 +20,8 @@
   * Default tag controller
   * @param {object} df webhook fulfillment object
   */
+
+ const validatePhoneNumber = require("./../../../helper/phone-validation");
  
  const PhoneNumberValidation = async (df) =>{
 
@@ -27,9 +29,13 @@
     if (df._request && df._request.sessionInfo && df._request.sessionInfo.parameters) {
         params = df._request.sessionInfo.parameters;
     };   
-    console.log(params);
 
-    df.setResponseText(`Please help me confirm if I have captured it correctly. You have entered ${params["phonenumber"]["phone-number"]}, is that correct?`)
+    let phoneNumber = params["phonenumber"]["phone-number"];
+
+    let isPhoneValid = validatePhoneNumber(phoneNumber);
+
+    df.setParameter("isphonevalid", isPhoneValid);
+
     
  };
  

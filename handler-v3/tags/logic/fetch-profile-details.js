@@ -22,15 +22,11 @@
   * @param {object} df webhook fulfillment object
   */
 
- 
  const FetchProfileDetails = async (df, db) =>{
      
    let userData = await GetData(db);
-   console.log(userData);
-   
-   df.setParameter('dbUserDetails', userData);
+   df.setParameter('db-user-details', userData);
 
-    
  };
  
  module.exports = FetchProfileDetails;
