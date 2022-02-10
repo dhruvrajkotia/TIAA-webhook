@@ -35,7 +35,8 @@ const mapper = {
     "default-tag": require("./logic/default-tag"),
     "phone-number-validation": require("./logic/phone-number-validation"),
     "fetch-profile-details": require("./logic/fetch-profile-details"),
-    "update-phone-number": require("./logic/update-phone-number")
+    "update-phone-number": require("./logic/update-phone-number"),
+    "update-beneficiary-name": require("./logic/update-beneficiary-name")
 };
 
 module.exports = tags;

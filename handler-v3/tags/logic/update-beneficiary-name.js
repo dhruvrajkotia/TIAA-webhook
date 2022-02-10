@@ -24,25 +24,32 @@ const { logger } = require("express-winston");
  
  const { UpdateData, GetData } = require("./../../../helper/firestore-methods");
 
- const UpdatePhoneNumber = async (df, db) =>{
+ function titleCase(str) {
+    return str.toLowerCase().replace(/\b(\w)/g, s => s.toUpperCase());
+  }
+
+ const UpdateBeneficiaryName = async (df, db) =>{
 
   let params ;
     if (df._request && df._request.sessionInfo && df._request.sessionInfo.parameters) {
         params = df._request.sessionInfo.parameters;
     };
 
-  let updatedPhoneNumber = params["phonenumber"]["phone-number"]
-  
-  let updateDataResponse = await UpdateData(db, {"phoneNumber": updatedPhoneNumber})
+
+    let updateIndex = params['updateIndex']
+    let name = titleCase(params['person']['name'])
+    let beneficiaryObject = params['db-user-details']['beneficiary']
+
+    beneficiaryObject[updateIndex-1].name = name
+
+    let updateDataResponse = await UpdateData(db, {"beneficiary": beneficiaryObject})
 
   if(updateDataResponse){
-    df.setResponseText(`We have successfully updated your contact details.`);
-    let userData = await GetData(db);
-    df.setParameter('db-user-details', userData);
+        let userData = await GetData(db);
+        df.setParameter('db-user-details', userData);
   }
-    
  };
  
- module.exports = UpdatePhoneNumber;
+ module.exports = UpdateBeneficiaryName;
  
 
