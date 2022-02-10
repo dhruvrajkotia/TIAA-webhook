@@ -40,6 +40,12 @@ const loadConfig = () => {
         "logger": {
             "piiFields": []
         },
+        "places": {
+            "enable": true,
+            "apiKey": process.env.MAPS_API_KEY,  //get it from the mail
+            "host": "https://maps.googleapis.com/maps/api/place/",
+            "endpoint": "textsearch/json"
+        },
         "services": {
             "http": {
                 "enable": true,

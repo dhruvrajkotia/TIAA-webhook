@@ -25,6 +25,7 @@
     "@google-cloud/firestore": "^3.3.3",
     "ajv": "^6.12.3",
     "awesome-phonenumber": "^2.68.0",
+    "axios": "^0.25.0",
     "dialogflow-fulfillment-builder": "github:Quantiphi/dialogflow-fulfillment-builder",
     "express": "^4.16.3",
     "express-winston": "^4.0.1",
