@@ -30,7 +30,7 @@
      params = df._request.sessionInfo.parameters;
    };
  
-   let updatedAddress = params["streetaddress"]["street-address"] + ", " + params["geocity"] + " " + params["geostate"] + " " + params["zipcode"]
+   let updatedAddress = params["new-address"]["street-address"] + ", " + params["new-address"]['city'] + " " + params["new-address"]['state'] + " " + params["new-address"]['zip-code']
  
    let updateDataResponse = await UpdateData(db, { "address": updatedAddress })
  

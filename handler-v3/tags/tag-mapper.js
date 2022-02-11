@@ -38,7 +38,8 @@ const mapper = {
     "update-phone-number": require("./logic/update-phone-number"),
     "update-beneficiary-name": require("./logic/update-beneficiary-name"),
     "update-address": require("./logic/update-address"),
-    "name-validation": require("./logic/name-validation")
+    "name-validation": require("./logic/name-validation"),
+    "validate-address": require("./logic/validate-address")
 };
 
 module.exports = tags;
