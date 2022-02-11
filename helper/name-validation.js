@@ -5,7 +5,7 @@ const nlp = require('compromise');
 * @param {Object} name name
 * @returns {Number} if name is correct return name else set empty string
 */
-const validateNameNLP = (query) => {
+const validateNameNLP = async (query) => {
     // check name with nlp library
     const names = nlp(query).people().out('topk');
     if (names.length > 0) {
