@@ -42,7 +42,7 @@ const loadConfig = () => {
         },
         "places": {
             "enable": true,
-            "apiKey": "AIzaSyCGIM-gYKVGBqxlvQmXLRjmfLWprGyIsYY",  //get it from the mail
+            "apiKey": process.env.API_KEYS,  //get it from the mail
             "host": "https://maps.googleapis.com/maps/api/place/",
             "endpoint": "textsearch/json"
         },
