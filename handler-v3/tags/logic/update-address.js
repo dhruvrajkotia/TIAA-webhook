@@ -30,8 +30,8 @@ const UpdateAddress = async (df, db) => {
     params = df._request.sessionInfo.parameters;
   };
 
-  let updatedAddress = params["new-address"]["street-address"] + ", " + params["new-address"]['city'] + " " + params["new-address"]['state'] + " " + params["new-address"]['zip-code']
-
+  let updatedAddress = (params["unitnumber"] ? params["unitnumber"]: "") + " " + params["new-address"]["street-address"] + ", " + params["new-address"]['city'] + " " + params["new-address"]['state'] + " " + params["new-address"]['zip-code']
+  
   let updateDataResponse = await UpdateData(db, { "address": updatedAddress })
 
   if (updateDataResponse) {
