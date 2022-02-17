@@ -30,34 +30,31 @@ const AddressValidation = async (df, db) => {
     if (df._request && df._request.sessionInfo && df._request.sessionInfo.parameters) {
         params = df._request.sessionInfo.parameters;
     };
-    
-    let userAddress = params.location.original + ' ' + (params['geo-city'] ? params['geo-city'] : '') + ' ' + (params['zip-code'] ? params['zip-code'] : '');
+    let userAddress = params.location.original;
     const apiResponse = await addressValidation(userAddress);
     let newAddress = {};
     let formattedAddress;
-    let completeAddress;
+    let addressCaptureStatus;
     if (apiResponse.length > 0) {
         formattedAddress = apiResponse[0].formatted_address.split(',');
-        if (apiResponse[0].types[0] == 'postal_code' || apiResponse[0].types[0] == 'locality') {
+        if (formattedAddress.length == 3) {
             newAddress['city'] = formattedAddress[0];
             newAddress['state'] = states[formattedAddress[1].split(' ')[1]];
             newAddress['zip-code'] = formattedAddress[1].split(' ')[2];
-            completeAddress = false;
-        } else if (apiResponse[0].types[0]) {
+            addressCaptureStatus = "Incomplete";
+        } else {
             newAddress['street-address'] = formattedAddress[0];
             newAddress['city'] = formattedAddress[1];
             newAddress['state'] = states[formattedAddress[2].split(' ')[1]];
             newAddress['zip-code'] = formattedAddress[2].split(' ')[2];
-            completeAddress = true;
-        } else {
-            newAddress = null;
-            // pass
+            addressCaptureStatus = "Complete";
         }
-        df.setParameter('new-address', newAddress);
-        df.setParameter('complete-address', completeAddress);
     } else {
+        addressCaptureStatus = "InvalidAddress";
         console.log('Error: Address not valid')
     }
+    df.setParameter('new-address', newAddress);
+    df.setParameter('address-capture-status', addressCaptureStatus);
 };
 
 module.exports = AddressValidation;

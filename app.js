@@ -34,8 +34,8 @@ const path = require("path");
 // const listFlows = require("./helper/api-v3/flows/list");
 
 module.exports = async () => {
-    if(process.env.NODE_ENV == null || process.env.NODE_ENV == "local"){
-        process.env.GOOGLE_APPLICATION_CREDENTIALS = path.join(__dirname,"keys/service-account.json");
+    if (process.env.NODE_ENV == null || process.env.NODE_ENV == "local") {
+        process.env.GOOGLE_APPLICATION_CREDENTIALS = path.join(__dirname, "keys/service-account.json");
     }
     let app = express();
 
@@ -51,25 +51,25 @@ module.exports = async () => {
     });
     let services = [];
     let connections = await databaseConnections();
-    if(connections["types"].length == 0){
+    if (connections["types"].length == 0) {
         logger.log("info", `database: ${false}`, null);
     }
-    else{
+    else {
         services["database"] = connections["connection"];
         logger.log("info", `database: ${true}`, null);
         logger.log("info", `databaseType(s) : ${connections["types"]}`, null);
     }
 
-    
-    if(config.services.http.enable)
+
+    if (config.services.http.enable)
         services["http"] = new HttpService(config);
 
 
 
-    if(config.fullfillmentConfig.enable)
-        router.post("/v2beta1/webhook", requestValidator.v2RequestValidator() ,webhookController(services));
-    if(config.fullfillmentConfigV3.enable)
-        router.use("/v3alpha1/webhook", requestValidator.v3RequestValidator() ,webhookControllerV3(services));
+    if (config.fullfillmentConfig.enable)
+        router.post("/v2beta1/webhook", requestValidator.v2RequestValidator(), webhookController(services));
+    if (config.fullfillmentConfigV3.enable)
+        router.use("/v3alpha1/webhook", requestValidator.v3RequestValidator(), webhookControllerV3(services));
 
     expressWinston.requestWhitelist.push("body");
     expressWinston.responseWhitelist.push("body");
@@ -92,7 +92,7 @@ module.exports = async () => {
 
     app.use("/", router);
 
-    app.use(errorHandler);  
+    app.use(errorHandler);
 
     return app;
 };

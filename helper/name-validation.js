@@ -7,13 +7,14 @@ const nlp = require('compromise');
 */
 const validateNameNLP = async (query) => {
     // check name with nlp library
+    let nerName;
     const names = nlp(query).people().out('topk');
     if (names.length > 0) {
         nerName = names[0].normal.split('').join(' ');
     } else {
         let name;
         try {
-            name = await helper.filterName(query);
+                name = await filterName(query);
             nerName = name;
         } catch (error) {
             console.log('First Name not found after applying filter');
@@ -23,7 +24,7 @@ const validateNameNLP = async (query) => {
 
 }
 
-const filterName = () => {
+const filterName = async (data) => {
     const itReplace = data.replace(' it', ' i t ');
     const whyReplace = itReplace.replace('why', 'y');
     const doubleReplace = whyReplace.replace('double',

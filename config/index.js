@@ -20,7 +20,7 @@
  * Configures the application based on the NODE_ENV eg: "production, qa and develop"
  * return application configurations   
  */
-
+require('dotenv').config();
 const loadConfig = () => {
     return {
         "port": process.env.PORT || 3000,
@@ -42,7 +42,7 @@ const loadConfig = () => {
         },
         "places": {
             "enable": true,
-            "apiKey": process.env.MAPS_API_KEY,  //get it from the mail
+            "apiKey": "AIzaSyCGIM-gYKVGBqxlvQmXLRjmfLWprGyIsYY",  //get it from the mail
             "host": "https://maps.googleapis.com/maps/api/place/",
             "endpoint": "textsearch/json"
         },

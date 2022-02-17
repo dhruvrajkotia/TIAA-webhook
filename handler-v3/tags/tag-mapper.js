@@ -37,9 +37,12 @@ const mapper = {
     "fetch-profile-details": require("./logic/fetch-profile-details"),
     "update-phone-number": require("./logic/update-phone-number"),
     "update-beneficiary-name": require("./logic/update-beneficiary-name"),
-    "update-address": require("./logic/update-address"),
     "name-validation": require("./logic/name-validation"),
-    "validate-address": require("./logic/validate-address")
+    "address-validation": require("./logic/address-validation"),
+    "validate-address": require("./logic/validate-address"),
+    "new-address-validation": require("./logic/new-address-validation"),
+    "update-address": require("./logic/update-address"),
+    "zip-code": require("./logic/zip-code")
 };
 
 module.exports = tags;

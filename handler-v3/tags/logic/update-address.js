@@ -14,34 +14,33 @@
  * limitations under the License.
  */
 
- "use strict";
+"use strict";
 
- /**
-  * Default tag controller
-  * @param {object} df webhook fulfillment object
-  */
- 
- const { UpdateData } = require("../../../helper/firestore-methods");
- 
- const UpdateAddress = async (df, db) => {
- 
-   let params;
-   if (df._request && df._request.sessionInfo && df._request.sessionInfo.parameters) {
-     params = df._request.sessionInfo.parameters;
-   };
- 
-   let updatedAddress = params["new-address"]["street-address"] + ", " + params["new-address"]['city'] + " " + params["new-address"]['state'] + " " + params["new-address"]['zip-code']
- 
-   let updateDataResponse = await UpdateData(db, { "address": updatedAddress })
- 
-   if (updateDataResponse) {
-     let userData = params['db-user-details'];
-     userData.address = updatedAddress;
-     df.setParameter('db-user-details', userData);
-   }
- };
- 
- module.exports = UpdateAddress;
- 
- 
- 
+/**
+ * Default tag controller
+ * @param {object} df webhook fulfillment object
+ */
+
+const { UpdateData } = require("../../../helper/firestore-methods");
+
+const UpdateAddress = async (df, db) => {
+
+  let params;
+  if (df._request && df._request.sessionInfo && df._request.sessionInfo.parameters) {
+    params = df._request.sessionInfo.parameters;
+  };
+
+  let updatedAddress = params["new-address"]["street-address"] + ", " + params["new-address"]['city'] + " " + params["new-address"]['state'] + " " + params["new-address"]['zip-code']
+
+  let updateDataResponse = await UpdateData(db, { "address": updatedAddress })
+
+  if (updateDataResponse) {
+    let userData = params['db-user-details'];
+    userData.address = updatedAddress;
+    df.setParameter('db-user-details', userData);
+  }
+};
+
+module.exports = UpdateAddress;
+
+

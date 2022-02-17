@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 Quantiphi Inc. All Rights Reserved.
+ * Copyright 2020 Quantiphi, Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,19 +16,22 @@
 
 "use strict";
 
-const expressApp = require("./app");
-const http = require("http");
-const logger = require("./lib/logger");
-const config = require("./config")();
+/**
+ * Default tag controller
+ * @param {object} df webhook fulfillment object
+ */
 
-expressApp()
-    .then(app => {
-        const server = http.createServer(app);
-        server.listen(config.port, (err) => {
-            if (err) {
-                logger.log("error", "Server error", null, { "message": err });
-            } else {
-                logger.log("info", `server running at  ${config.port}`, null);
-            }
-        });
-    });
+const ZipCode = async (df) => {
+    let params;
+    if (df._request && df._request.sessionInfo && df._request.sessionInfo.parameters) {
+        params = df._request.sessionInfo.parameters;
+    };
+    const zipCode = params['zip-code'];
+    let isValid = false;
+    if (zipCode.length == 5)
+        isValid = true;
+
+    df.setParameter("isvalid-zip-code", isValid);
+};
+
+module.exports = ZipCode;

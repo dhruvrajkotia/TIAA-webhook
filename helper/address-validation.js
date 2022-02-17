@@ -4,27 +4,39 @@ const axios = require("axios");
 const config = require("./../config")();
 
 
-const addressValidation = async (addressQuery) => {             
+const addressValidation = async (query) => {
     try {
 
-    // addressQueryExample = "730 Third Ave., New York, NY 10017"
-    let result = await axios.get(`${config.places.host}/${config.places.endpoint}`, {
-        params: {
+        // addressQueryExample = "730 Third Ave., New York, NY 10017"
+        // query = "1001 N 11th St 72956"
+        let params = {
             key: config.places.apiKey,
-            addressQuery
+            query
         }
-    })
+        let result = await axios.get(`${config.places.host}${config.places.endpoint}`, {
+            params: params
+        })
+        console.log(params)
+        console.log(result.data.results);
 
-    console.log(result.data.results);
-    
-    return result.data.results   //array will contain the valid address, it will be empty if no valid address is found
-     
+
+        return result.data.results   //array will contain the valid address, it will be empty if no valid address is found
+
     } catch (error) {
-        console.log(error)
+        console.log(error.message);
         return []
     }
-    
+
 }
 
+// const abc = async () => {
+//     const response = await addressValidation();
+//     if (response.length > 0) {
+
+//     } else {
+//         console.log('Invalid address');
+//     }
+// }
+// abc();
 
 module.exports = addressValidation
