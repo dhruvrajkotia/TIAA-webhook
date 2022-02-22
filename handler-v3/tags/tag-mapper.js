@@ -42,7 +42,8 @@ const mapper = {
     "validate-address": require("./logic/validate-address"),
     "new-address-validation": require("./logic/new-address-validation"),
     "update-address": require("./logic/update-address"),
-    "zip-code": require("./logic/zip-code")
+    "zip-code": require("./logic/zip-code"),
+    "validate-house-number": require("./logic/validate-house-number")
 };
 
 module.exports = tags;
