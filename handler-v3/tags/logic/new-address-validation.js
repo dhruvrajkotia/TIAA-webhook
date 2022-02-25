@@ -53,9 +53,16 @@ const NewAddressValidation = async (df, db) => {
         }
         const regex = /^\d+[a-zA-Z0-9_]*|^(\d+)/g;
         const found = formattedAddress[0].match(regex);
-        if (found)
+        if (found) {
             newAddress['unit-number'] = found[0];
+        } else {
+            const streetAddress = params['location']['street-address'] ? params['location']['street-address'] : params['street-address']['street-address'];
+            const foundUnitNum = streetAddress.match(regex);
+            if (foundUnitNum)
+                newAddress['unit-number'] = foundUnitNo[0];
+        }
         console.log(newAddress);
+
     } else {
         newAddress['is-valid'] = false;
         addressCaptureStatus = "InValid";
