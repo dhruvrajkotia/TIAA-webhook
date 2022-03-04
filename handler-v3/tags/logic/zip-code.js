@@ -20,6 +20,8 @@
  * Default tag controller
  * @param {object} df webhook fulfillment object
  */
+const addressValidation = require('../../../helper/address-validation');
+const states = require('../../../helper/state-mapper');
 
 const ZipCode = async (df) => {
     let params;
@@ -27,10 +29,32 @@ const ZipCode = async (df) => {
         params = df._request.sessionInfo.parameters;
     };
     const zipCode = params['zip-code'];
+    let city = ""
+    let state = ""
+    let formattedAddress;
     let isValid = false;
-    if (zipCode.length == 5)
+    if (zipCode.length == 5) {
+
         isValid = true;
 
+        if (params['getCityCountry']) {
+        const apiResponse = await addressValidation(zipCode);
+            if(apiResponse.length > 0) {
+                formattedAddress = apiResponse[0].formatted_address.split(',');
+                if (formattedAddress.length == 3) {
+                    city = formattedAddress[0];
+                    state = states[formattedAddress[1].split(' ')[1]];
+                } else {
+                    city = formattedAddress[1];
+                    state = states[formattedAddress[2].split(' ')[1]]
+                }
+            }
+
+            df.setParameter('city', city)
+            df.setParameter('state', state)
+        }
+    }
+        
     df.setParameter("isvalid-zip-code", isValid);
 };
 
