@@ -29,14 +29,4 @@ const addressValidation = async (query) => {
 
 }
 
-// const abc = async () => {
-//     const response = await addressValidation();
-//     if (response.length > 0) {
-
-//     } else {
-//         console.log('Invalid address');
-//     }
-// }
-// abc();
-
-module.exports = addressValidation
+module.exports = addressValidation;

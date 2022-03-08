@@ -59,7 +59,7 @@ const NewAddressValidation = async (df, db) => {
             const streetAddress = params['location']['street-address'] ? params['location']['street-address'] : params['street-address']['street-address'];
             const foundUnitNum = streetAddress.match(regex);
             if (foundUnitNum)
-                newAddress['unit-number'] = foundUnitNo[0];
+                newAddress['unit-number'] = foundUnitNum[0];
         }
         console.log(newAddress);
 
