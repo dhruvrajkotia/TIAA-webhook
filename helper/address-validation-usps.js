@@ -23,17 +23,15 @@
 
 const axios = require('axios');
 const xml2js = require('xml2js');
-require('dotenv').config();
 
-
-const addressValidationUSPS = async () => {
+const addressValidationUSPS = async (address) => {
     // console.log(process.env.USER_ID)
     let xmlRequest = `<AddressValidateRequest USERID="${process.env.USER_ID}"><Address>
     <Address1></Address1>
-    <Address2>3501 Jupiter Rd</Address2>
-    <City></City>
-    <State></State>
-    <Zip5>75082</Zip5>
+    <Address2>${address.unitnumber}, ${address.street}</Address2>
+    <City>${address.city}</City>
+    <State>${address.state}</State>
+    <Zip5>${address.zip_code}</Zip5>
     <Zip4></Zip4>
     </Address>
     </AddressValidateRequest>`;
@@ -47,15 +45,14 @@ const addressValidationUSPS = async () => {
     let result = await axios.post(url, xmlRequest, config);
     // console.log(result.data);
 
-    xml2js.parseString(result.data, (err, res) => {
-        if (err) {
-            console.log(err);
-        }
-        let jsonResult = JSON.stringify(res);
-
-        console.log(jsonResult);
+    let addressResponse = await xml2js.parseStringPromise(result.data).then(function(parseResult){
+        return parseResult["AddressValidateResponse"]["Address"][0]
     })
+    .catch(function (err){
+        return null 
+    })
+
+    return addressResponse
 }
 
-addressValidationUSPS();
-// module.exports = addressValidationUSPS;
+module.exports = addressValidationUSPS;

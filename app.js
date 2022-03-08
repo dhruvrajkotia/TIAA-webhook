@@ -31,10 +31,12 @@ const logger = require("./lib/logger");
 const authMiddleware = require("./helper/basic-auth");
 const helmet = require("helmet");
 const path = require("path");
+const dotenv = require('dotenv');
 // const listFlows = require("./helper/api-v3/flows/list");
 
 module.exports = async () => {
     if (process.env.NODE_ENV == null || process.env.NODE_ENV == "local") {
+        dotenv.config({path:'./config/.env'});
         process.env.GOOGLE_APPLICATION_CREDENTIALS = path.join(__dirname, "keys/service-account.json");
     }
     let app = express();

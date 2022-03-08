@@ -44,7 +44,8 @@ const mapper = {
     "update-address": require("./logic/update-address"),
     "zip-code": require("./logic/zip-code"),
     "validate-house-number": require("./logic/validate-house-number"),
-    "set-current-date": require("./logic/set-current-date")
+    "set-current-date": require("./logic/set-current-date"),
+    "validate-address-usps": require("./logic/validate-address-usps")
 };
 
 module.exports = tags;
