@@ -20,39 +20,40 @@
   * Default tag controller
   * @param {object} df webhook fulfillment object
   */
-
-const axios = require('axios');
-const xml2js = require('xml2js');
-
-const addressValidationUSPS = async (address) => {
-    // console.log(process.env.USER_ID)
-    let xmlRequest = `<AddressValidateRequest USERID="${process.env.USER_ID}"><Address>
-    <Address1></Address1>
-    <Address2>${address.unitnumber}, ${address.street}</Address2>
-    <City>${address.city}</City>
-    <State>${address.state}</State>
-    <Zip5>${address.zip_code}</Zip5>
-    <Zip4></Zip4>
-    </Address>
-    </AddressValidateRequest>`;
-
-    let url = `https://secure.shippingapis.com/ShippingAPI.dll?API=Verify&XML=${xmlRequest}`;
-    
-    let config = {
-        headers : { 'Content-Type': 'text/xml', 'Accept' : '*/*'}
-    };
-
-    let result = await axios.post(url, xmlRequest, config);
-    // console.log(result.data);
-
-    let addressResponse = await xml2js.parseStringPromise(result.data).then(function(parseResult){
-        return parseResult["AddressValidateResponse"]["Address"][0]
-    })
-    .catch(function (err){
-        return null 
-    })
-
-    return addressResponse
-}
-
-module.exports = addressValidationUSPS;
+ 
+ const axios = require('axios');
+ const xml2js = require('xml2js');
+ 
+ const addressValidationUSPS = async (address) => {
+     // console.log(process.env.USER_ID)
+     let xmlRequest = `<AddressValidateRequest USERID="${process.env.USER_ID}"><Address>
+     <Address1>${address.poBox}</Address1>
+     <Address2>${address.unitnumber}, ${address.street}</Address2>
+     <City>${address.city}</City>
+     <State>${address.state}</State>
+     <Zip5>${address.zipCode}</Zip5>
+     <Zip4></Zip4>
+     </Address>
+     </AddressValidateRequest>`;
+ 
+     let url = `https://secure.shippingapis.com/ShippingAPI.dll?API=Verify&XML=${xmlRequest}`;
+ 
+     let config = {
+         headers: { 'Content-Type': 'text/xml', 'Accept': '*/*' }
+     };
+ 
+     let result = await axios.post(url, xmlRequest, config);
+     // console.log(result.data);
+ 
+     let addressResponse = await xml2js.parseStringPromise(result.data).then(function (parseResult) {
+         return parseResult["AddressValidateResponse"]["Address"][0]
+     })
+         .catch(function (err) {
+             return null
+         })
+ 
+     return addressResponse
+ }
+ 
+ module.exports = addressValidationUSPS;
+ 
