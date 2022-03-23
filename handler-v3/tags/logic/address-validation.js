@@ -34,7 +34,7 @@
      let formattedAddress;
      let addressCaptureStatus;
      if (params['po-box'] != false && params['po-box'] != null) {
-         const apiResponse = await addressValidationUSPS({ 'poBox': params['po-box'], 'zipCode': params['location']['zip-code'] ? params['location']['zip-code'] : params['zip-code'] });
+         const apiResponse = await addressValidationUSPS({ 'poBox': params['po-box'], 'zipCode': ( params['location'] ? params['location']['zip-code'] ? params['location']['zip-code'] : params['zip-code'] : params['zip-code'])});
          console.log(apiResponse);
          if (apiResponse['Address2']) {
              newAddress['street-address'] = apiResponse.Address2[0];
@@ -47,7 +47,7 @@
          } else {
              newAddress['is-valid'] = false;
              newAddress['po-box'] = params['po-box']
-             const apiResponse = await addressValidation(params['location']['zip-code'] ? params['location']['zip-code']: params['zip-code']);
+             const apiResponse = await addressValidation(params['location'] ? params['location']['zip-code'] ? params['location']['zip-code']: params['zip-code'] : params['zip-code']);
              if (apiResponse.length > 0) {
                 formattedAddress = apiResponse[0].formatted_address.split(',');
                 newAddress['city'] = formattedAddress[0];
@@ -58,7 +58,7 @@
              console.log('Error: Address not valid');
          }
      } else {
-         let userAddress = (params['location']['street-address'] ? params['location']['street-address'] : params['street-address']['street-address']) + ' ' + (params['location']['city'] ? params['location']['city'] : '') + ' ' + (params['location']['zip-code'] ? params['location']['zip-code'] : '') + (params['zip-code'] ? params['zip-code'] : '');
+         let userAddress = (params['location']['street-address'] ? params['location']['street-address'] : params['street-address']['street-address']) + ' ' + (params['location']['city'] ? params['location']['city'] : '') + ' ' + (params['location'] ? params['location']['zip-code'] ? params['location']['zip-code'] : '' : '') + (params['zip-code'] ? params['zip-code'] : '');
          // let userAddress = params.location.original;
          const apiResponse = await addressValidation(userAddress);
          if (apiResponse.length > 0) {
@@ -92,7 +92,7 @@
              newAddress['is-valid'] = false;
              addressCaptureStatus = "InValid";
              newAddress['street-address'] = (params['location']['street-address'] ? params['location']['street-address'] : params['street-address']['street-address'])
-             const apiResponse = await addressValidation(params['location']['zip-code'] ? params['location']['zip-code']: params['zip-code']);
+             const apiResponse = await addressValidation(params['location'] ? params['location']['zip-code'] ? params['location']['zip-code']: params['zip-code'] : params['zip-code']);
              if (apiResponse.length > 0) {
                 formattedAddress = apiResponse[0].formatted_address.split(',');
                 newAddress['city'] = formattedAddress[0];
