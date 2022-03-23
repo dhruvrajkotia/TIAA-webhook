@@ -22,6 +22,10 @@
   */
  
  const CheckPoBox = async (df) => {
+    let params;
+    if (df._request && df._request.sessionInfo && df._request.sessionInfo.parameters) {
+        params = df._request.sessionInfo.parameters;
+    };
      console.log(df._request.text);
      const userQuery = df._request.text;
      const poBoxRegex = /(po|post office|postal|post|mailing|mail) box \d{1,4}/gi;
@@ -33,6 +37,9 @@
      } else {
          df.setParameter("po-box", false);
      }
+
+     let zip_code = params['location'] ? params['location']['zip-code'] ? params['location']['zip-code'] : params['zip-code'] : params['zip-code']
+     df.setParameter("zip-code", zip_code);
      // const zip4Regex = /\d{1,4}$/gi
      // const zip4Found = userQuery.match(zip4Regex);
      // console.log(zip4Found);
