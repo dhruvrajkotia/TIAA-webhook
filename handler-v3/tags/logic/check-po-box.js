@@ -27,7 +27,7 @@
         params = df._request.sessionInfo.parameters;
     };
      console.log(df._request.text);
-     const userQuery = df._request.text;
+     const userQuery = df._request.transcript ? df._request.transcript : df._request.text;
      const poBoxRegex = /(po|post office|postal|post|mailing|mail) box \d{1,4}/gi;
      const poBoxFound = userQuery.match(poBoxRegex);
      if (poBoxFound) {
