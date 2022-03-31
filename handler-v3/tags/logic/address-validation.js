@@ -36,6 +36,7 @@
      if (params['po-box'] != false && params['po-box'] != "false" && params['po-box'] != null) {
          const apiResponse = await addressValidationUSPS({ 'poBox': params['po-box'], 'zipCode': ( params['location'] ? params['location']['zip-code'] ? params['location']['zip-code'] : params['zip-code'] : params['zip-code'])});
          console.log(apiResponse);
+         newAddress['country'] = params['country']
          if (apiResponse['Address2']) {
              newAddress['street-address'] = apiResponse.Address2[0];
              newAddress['city'] = apiResponse.City[0];
