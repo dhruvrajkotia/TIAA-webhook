@@ -23,14 +23,16 @@
 
 const HouseNumberValidation = async (df) => {
     let params;
+    
     if (df._request && df._request.sessionInfo && df._request.sessionInfo.parameters) {
         params = df._request.sessionInfo.parameters;
     };
+
     let unitNumber = params["house-number"];
     let regex = /\d+[a-zA-Z]{0,3}/g;
     unitNumber = unitNumber.match(regex);
-    df.setParameter('unitnumber', unitNumber[0]);
 
+    df.setParameter('unit-number', unitNumber[0]);
 }
 
 // HouseNumberValidation();
