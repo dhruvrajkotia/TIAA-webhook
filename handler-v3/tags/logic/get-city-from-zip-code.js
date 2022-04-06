@@ -30,8 +30,7 @@
     };
     const zipCode = params['zip-code'];
     let city = params['location'] ? params['location']['city'] ? params['location']['city'] : "" : "";
-    let state = ""
-    let unit_number = "";
+    let streetAddress = ''
     let user_address = {};
     let formattedAddress;
     user_address['country'] = params['country']
@@ -40,18 +39,23 @@
     const apiResponse = await addressValidation(params['country'] + " " + zipCode);
     if(apiResponse.length > 0) {
         formattedAddress = apiResponse[0].formatted_address.split(',');
-        user_address['city'] = formattedAddress.slice(-3)[0];
+        user_address['city'] = city ? city : formattedAddress.slice(-3)[0];
         let stateZipcode = formattedAddress.slice(-2)[0].split(' ')
         user_address['state'] = states[stateZipcode[1]] ? states[stateZipcode[1]] : stateZipcode[1];
     }
 
     const regex = /^\d+[a-zA-Z0-9_]*|^(\d+)/g;
-    const streetAddress = params['location']['street-address'] ? params['location']['street-address'] : params['street-address']['street-address'];
+    if (params['po-box'] != false && params['po-box'] != "false" && params['po-box'] != null)
+    {
+        streetAddress = params['po-box'];      
+    }
+    else {
+        streetAddress = params['location']['street-address'] ? params['location']['street-address'] : params['street-address']['street-address'];
+    }
     const foundUnitNum = streetAddress.match(regex);
     if (foundUnitNum)
         user_address['unit-number'] = foundUnitNum[0];
     user_address['street-address'] = streetAddress
-    
     
     df.setParameter('user-address', user_address)
 };

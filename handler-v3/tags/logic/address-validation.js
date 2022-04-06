@@ -38,12 +38,11 @@
      address["zip-code"] = params['user-address']['zip-code']
      address["city"] = params['user-address']['city'] ? params['user-address']['city'] : params['city']
      address["state"] = params['user-address']['state'] ? params['user-address']['state'] : ""
-     address["is_address_valid"] = false
+     address["is-valid"] = false
 
 
      if (params['po-box'] != false && params['po-box'] != "false" && params['po-box'] != null) {
          const apiResponse = await addressValidationUSPS({ 'poBox': params['po-box'], 'zipCode': params['user-address']['zip-code'] });
-         country = params['country']
          address["street-address"] = params['po-box']
          if (apiResponse['Address2']) {
              zip_code = apiResponse.Zip5[0];
